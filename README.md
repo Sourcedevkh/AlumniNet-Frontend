@@ -1,38 +1,30 @@
-# Frontend
+# AlumniNet Frontend
+This platform that provide management control shcolarship students.
 
-This template should help get you started developing with Vue 3 in Vite.
+## How to Get Started
+Clone the repository and install dependencies
 
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+```bash
+https://github.com/Sourcedevkh/AlumniNet-Frontend.git
+cd AlumniNet-Frontend
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+Run the setup script to configure your environment variables, initialize the database, and populate it with sample data:
 
-```sh
-npm run dev
+```bash
+npm run setup
 ```
 
-### Compile and Minify for Production
+This script will:
 
-```sh
-npm run build
+- Create a ```.env``` the Fronted 
+- Connection database ```MySQL``` 
+- Expires jwt
+
+## Data Flow Diagram (DFD) 
+
+This link DFD AlumniNet handler by teams
+```bash
+https://www.figma.com/board/rfimfi3raLKQMN0NTBRzXv/DFD?node-id=0-1&p=f&t=TMOd8c71EM0zIMaP-0
 ```
