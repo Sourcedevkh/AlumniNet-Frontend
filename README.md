@@ -28,3 +28,10 @@ This link DFD AlumniNet handler by teams
 ```bash
 https://www.figma.com/board/rfimfi3raLKQMN0NTBRzXv/DFD?node-id=0-1&p=f&t=TMOd8c71EM0zIMaP-0
 ```
+
+## Data Flow Diagram (DFD)
+This link ERD AlumniNet
+
+```bash
+https://www.figma.com/board/rfimfi3raLKQMN0NTBRzXv/DFD?node-id=0-1&p=f&t=TMOd8c71EM0zIMaP-0
+```
