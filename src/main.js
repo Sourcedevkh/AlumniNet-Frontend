@@ -7,6 +7,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import './assets/css/main.css'
 import vuetify from './plugins/vuetify'
 
+
 import App from './App.vue'
 import router from './router'
 
