@@ -18,7 +18,7 @@ defineProps({
   },
   btnClass: {
     type: String,
-    default: "btn-primary w-100 fw-semibold",
+    default: "w-fit btn-primary",
   },
 });
 
@@ -35,7 +35,7 @@ const onClick = (e) => {
     :disabled="disabled || loading"
     @click="onClick"
     :class="[
-      'btn d-flex align-items-center justify-content-center btn-primary px-4 global-style',
+      'btn d-flex align-items-center justify-content-center px-4 global-style',
       btnClass,
       { disabled: disabled || loading },
     ]"
@@ -48,7 +48,6 @@ const onClick = (e) => {
         aria-hidden="true"
       ></span>
       {{ loadingText }}
-      <h1></h1>
     </template>
 
     <!-- Normal -->
@@ -59,15 +58,21 @@ const onClick = (e) => {
 </template>
 
 <style scoped>
-    .global-style{
-        font-family: var(--font-khmer);
-        gap: 10px;
-        font-size: var(--text-2xl);
-        font-weight: var(--font-weight-medium);
-        border-radius: var(--radius-xl);
-        /* background-color: #0075FF; */
-    }
-
-
-
+.global-style {
+  font-family: var(--font-khmer);
+  gap: 10px;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-md);
+  background: var(--primary-color);
+  color: var(--color-bg-light);
+}
+.global-style:active {
+  background: var(--color-blue-navy);
+  color: var(--color-bg-light);
+}
+.btn-login:disabled {
+  opacity: 0.6 !important;
+  background: var(--primary-color) !important;
+}
 </style>

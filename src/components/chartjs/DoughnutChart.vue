@@ -102,7 +102,7 @@ const chartOptions = ref({
 <template>
   <div class="chart-wrapper">
     <h3 class="title">ក្រាព្វរបស់ប្រព័ន្ធ</h3>
-        <div class="chart-container">
+    <div class="chart-container">
       <Doughnut :data="chartData" :options="chartOptions" />
     </div>
     <div class="custom-legend">
@@ -121,17 +121,17 @@ const chartOptions = ref({
 </template>
 
 <style scoped>
-
 .chart-wrapper {
-    background: #ffffff;
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   width: 100%;
   border: var(--border-1);
 }
 
 .chart-wrapper .title {
+  color: var(--color-black);
   font-family: var(--font-khmer);
   font-weight: var(--font-weight-semibold);
   font-size: var(--text-md);
@@ -139,7 +139,7 @@ const chartOptions = ref({
 
 .chart-container {
   position: relative;
-  height: 150px;
+  height: 210px;
   width: 100%;
 }
 

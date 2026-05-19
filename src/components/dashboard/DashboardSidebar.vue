@@ -1,5 +1,6 @@
 <script setup>
 // icon
+import Branding from '../icons/BrandingAlumiNet.vue'
 import Dashboard from "../icons/Dashboard.vue";
 import Add from "../icons/Add.vue";
 import ArrowLeft from "../icons/Arrow-left.vue";
@@ -71,17 +72,18 @@ const reports = [
 <template>
   <aside class="sidebar">
     <!-- Logo -->
-    <div class="logo">
-      <h1 class="logo-text">AlumiNet</h1>
+    <div class="brand-container">
+      <!-- <h1 class="logo-text">AlumiNet</h1> -->
+      <Branding :size="30" />
     </div>
 
     <!-- Dashboard -->
-    <label class="section-title">Dashboard</label>
+    <!-- <label class="section-title">Dashboard</label> -->
     <router-link
       v-for="(item, index) in dashboard"
       :key="'mgmt-' + index"
       :to="{ name: item.path }"
-      class="menu-item"
+      class="menu-item mt-3"
     >
       <div class="icon-wrapper">
         <component :is="item.icon" :size="item.size || 20" />
@@ -138,18 +140,14 @@ const reports = [
 }
 
 /* Logo */
-.logo {
-  text-align: center;
-  margin: 0 20px;
-}
-
-.logo .logo-text {
-  color: var(--primary-color);
-  font-size: var(--text-2xl);
-  font-weight: var(--font-weight-bold);
-  border-bottom: 2px solid
+.brand-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+    border-bottom: 2px solid
     color-mix(in srgb, var(--primary-color), transparent 50%);
-  padding-bottom: 14px;
+  padding-bottom: 16px;
 }
 
 /* Section */

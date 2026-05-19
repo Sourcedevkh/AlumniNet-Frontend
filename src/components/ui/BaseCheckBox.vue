@@ -1,0 +1,50 @@
+<script setup>
+defineProps({
+  label: { type: String, default: "" },
+});
+</script>
+
+<template>
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="exampleCheck1"
+    />
+    <label class="form-check-label" for="exampleCheck1"> {{ label }} </label>
+  </div>
+</template>
+
+<style scoped>
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.form-check-input {
+  border: 1.5px solid #d9d9d9;
+  border-radius: 4px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.form-check-input:hover {
+  border-color: #003262;
+}
+
+.form-check-input:checked {
+  background-color: #003262;
+  border-color: #003262;
+}
+
+.form-check-label {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #8c8c8c;
+  cursor: pointer;
+}
+</style>
