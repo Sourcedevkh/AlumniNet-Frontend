@@ -1,5 +1,6 @@
 <script setup>
 // icon
+import { ref } from 'vue'
 import Dashboard from "../icons/Dashboard.vue";
 import Add from "../icons/Add.vue";
 import ArrowLeft from "../icons/Arrow-left.vue";
@@ -9,6 +10,10 @@ import Graduation from "../icons/Graduation.vue";
 import Home from "../icons/Home.vue";
 import User from "../icons/User.vue";
 import Layer from "../icons/Layer.vue";
+import BaseModel from "../ui/BaseModal.vue";
+
+const isShow = ref(false);
+const loading = ref(false);
 
 const dashboard = [
   {
@@ -77,12 +82,7 @@ const reports = [
 
     <!-- Dashboard -->
     <label class="section-title">Dashboard</label>
-    <router-link
-      v-for="(item, index) in dashboard"
-      :key="'mgmt-' + index"
-      :to="{ name: item.path }"
-      class="menu-item"
-    >
+    <router-link v-for="(item, index) in dashboard" :key="'mgmt-' + index" :to="{ name: item.path }" class="menu-item">
       <div class="icon-wrapper">
         <component :is="item.icon" :size="item.size || 20" />
       </div>
@@ -91,12 +91,7 @@ const reports = [
 
     <label class="section-title">ផ្ទាំងគ្រប់គ្រងទូទៅ</label>
 
-    <router-link
-      v-for="(item, index) in management"
-      :key="'mgmt-' + index"
-      :to="{ name: item.path }"
-      class="menu-item"
-    >
+    <router-link v-for="(item, index) in management" :key="'mgmt-' + index" :to="{ name: item.path }" class="menu-item">
       <div class="icon-wrapper">
         <component :is="item.icon" :size="item.size || 20" />
       </div>
@@ -105,12 +100,7 @@ const reports = [
 
     <label class="section-title">ផ្ទាំងគ្រប់គ្រងពិន្ទុ</label>
 
-    <router-link
-      v-for="(item, index) in reports"
-      :key="'report-' + index"
-      :to="{ name: item.path }"
-      class="menu-item"
-    >
+    <router-link v-for="(item, index) in reports" :key="'report-' + index" :to="{ name: item.path }" class="menu-item">
       <div class="icon-wrapper">
         <component :is="item.icon" :size="20" />
       </div>
@@ -120,12 +110,38 @@ const reports = [
     <!-- Logout -->
     <div class="logout">
       <div class="icon logout-icon"><arrow-left /></div>
-      <span>ចាកចេញ</span>
+      <span @click="isShow = true">ចាកចេញ</span>
     </div>
   </aside>
+
+  <BaseModel :show="isShow" @close="isShow = false">
+    <template #modal>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Logout</h5>
+          <button class="btn-close" @click="isShow = false"></button>
+        </div>
+        <p class="description">
+          សូមបញ្ជាក់ម្ដងទៀត ប្រសិនបើអ្នកចង់ចាកចេញពីប្រព័ន្ធ
+          <span>AlumiNet</span>
+        </p>
+
+        <div class="modal-footer">
+          <BaseButton class="btn cancel-btn" @click="isShow = false">
+            បោះបង់
+          </BaseButton>
+
+          <BaseButton class="btn confirm-btn" :loading="loading" @click="onClickLogout">
+            {{ loading ? "Loading..." : "ចាកចេញ" }}
+          </BaseButton>
+        </div>
+      </div>
+    </template>
+  </BaseModel>
 </template>
 
 <style scoped>
+
 .sidebar {
   width: 270px;
   height: 100vh;
@@ -147,8 +163,7 @@ const reports = [
   color: var(--primary-color);
   font-size: var(--text-2xl);
   font-weight: var(--font-weight-bold);
-  border-bottom: 2px solid
-    color-mix(in srgb, var(--primary-color), transparent 50%);
+  border-bottom: 2px solid color-mix(in srgb, var(--primary-color), transparent 50%);
   padding-bottom: 14px;
 }
 
@@ -239,4 +254,137 @@ const reports = [
   background: #ffe6e6;
   color: #ff4b4b;
 }
+
+
+
+/* Container របស់ Modal */
+.modal-content {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f5f9;
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  font-family: 'Kantumruy Pro', 'Inter', sans-serif; /* ប្រើ Font ខ្មែរបែបសម័យថ្មី */
+}
+
+/* Header Section */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-b: 1px solid #f1f5f9;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b; /* ពណ៌ប្រផេះចាស់បែប Premium */
+  margin: 0;
+}
+
+/* ប៊ូតុងខ្វែង (x) សម្រាប់បិទ */
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.btn-close:hover {
+  color: #64748b;
+  background-color: #f8fafc;
+}
+
+.btn-close::before {
+  content: "✕"; /* ករណីមិនទាន់មាន icon ស្រាប់ */
+}
+
+/* ផ្នែកអត្ថបទពិពណ៌នា (Body) */
+.description {
+  font-size: 17px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* លេងពណ៌លើឈ្មោះប្រព័ន្ធ AlumiNet ឱ្យលេចធ្លោ */
+.description span {
+  font-weight: 700;
+  color: #3b82f6; /* ពណ៌ខៀវបែបបច្ចេកវិទ្យា */
+  background-color: #eff6ff;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin: 0 4px;
+  display: inline-block;
+}
+
+/* Footer Section */
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+/* ស្ទីលរួមរបស់ប៊ូតុង */
+.btn {
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+}
+
+/* ប៊ូតុងបោះបង់ (Cancel) */
+.cancel-btn {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.cancel-btn:hover {
+  background-color: #e2e8f0;
+  color: #1e293b;
+}
+
+/* ប៊ូតុងចាកចេញ (Confirm Logout) */
+.confirm-btn {
+  background-color: #ef4444; /* ពណ៌ក្រហមតំណាងអោយការ Logout/Delete */
+  color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2);
+}
+
+.confirm-btn:hover {
+  background-color: #dc2626;
+  box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3);
+  transform: translateY(-1px); /* រំកិលឡើងលើបន្តិចពេល Hover */
+}
+
+.confirm-btn:active {
+  transform: translateY(0);
+}
+
+/* ស្ទីលពេលប៊ូតុងកំពុង Loading */
+.confirm-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 </style>
