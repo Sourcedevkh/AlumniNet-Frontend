@@ -4,6 +4,7 @@ import DashboardSidebar from "@/components/dashboard/DashboardSidebar.vue";
 </script>
 
 <template>
+  <v-app>
     <div class="dashboard-container">
       <aside class="sidebar-wrapper">
         <DashboardSidebar />
@@ -15,10 +16,11 @@ import DashboardSidebar from "@/components/dashboard/DashboardSidebar.vue";
         </header>
 
         <main class="page-content">
-          <router-view />
-        </main>
+            <router-view />
+          </main>
+        </div>
       </div>
-    </div>
+    </v-app>
 </template>
 
 <style scoped>
