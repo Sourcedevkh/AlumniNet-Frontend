@@ -1,17 +1,16 @@
-/* Poppins Regular (Weight: 400) */
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 @font-face {
   font-family: "Poppins";
-  src: url("./fonts/Poppins-Regular.ttf") format("truetype"); /* ប្តូរ path តាមទីតាំង folder fonts របស់បង */
+  src: url("./fonts/Poppins-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 
-/* Poppins Medium (Weight: 500) */
 @font-face {
   font-family: "Poppins";
   src: url("./fonts/Poppins-Medium.ttf") format("truetype");
@@ -19,7 +18,6 @@
   font-style: normal;
 }
 
-/* Poppins SemiBold (Weight: 600) */
 @font-face {
   font-family: "Poppins";
   src: url("./fonts/Poppins-SemiBold.ttf") format("truetype");
@@ -27,7 +25,6 @@
   font-style: normal;
 }
 
-/* Poppins Bold (Weight: 700) */
 @font-face {
   font-family: "Poppins";
   src: url("./fonts/Poppins-Bold.ttf") format("truetype");
@@ -41,13 +38,25 @@
   --color-primary: #003262;
 }
 
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+input[type="password"]::-webkit-contacts-auto-fill-button,
+input[type="password"]::-webkit-credentials-filter-button {
+    display: none !important;
+}
+
 @layer base {
   :root {
     /* Font families */
-    --font-primary: "Inter", sans-serif; /* main UI font */
-    --font-display: "Nunito Sans", sans-serif; /* stat card numbers / navbar */
-    --font-khmer: "Noto Sans Khmer", sans-serif; /* Khmer script */
-    --font-poppins: "Poppins", sans-serif; /* sidebar & navbar labels */
+    --font-primary: "Inter", sans-serif; 
+    --font-display: "Nunito Sans", sans-serif;
+    --font-khmer: "Poppins", "Khmer OS Siemreap", sans-serif;
+    --font-poppins: "Poppins", sans-serif; 
     --breakpoint-3xl: 1920px;
     /* ==========================================================================
      1. BRAND & PRIMARY COLORS (ពណ៌គោលរបស់ AlumiNet)

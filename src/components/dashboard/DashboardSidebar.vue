@@ -1,242 +1,391 @@
-<script setup>
-// icon
-import Dashboard from "../icons/Dashboard.vue";
-import Add from "../icons/Add.vue";
-import ArrowLeft from "../icons/Arrow-left.vue";
-import Book from "../icons/Book.vue";
-import file from "../icons/file.vue";
-import Graduation from "../icons/Graduation.vue";
-import Home from "../icons/Home.vue";
-import User from "../icons/User.vue";
-import Layer from "../icons/Layer.vue";
-
-const dashboard = [
-  {
-    name: "ផ្ទាំងគ្រប់គ្រង",
-    icon: Dashboard,
-    path: "Dashboard",
-    color: "#ffffff",
-  },
-];
-
-const management = [
-  {
-    name: "ផ្ទាំងគ្រប់គ្រងសិស្ស",
-    icon: User,
-    path: "Students",
-    color: "#ffffff",
-  },
-  {
-    name: "ផ្ទាំងគ្រប់គ្រងថ្នាក់",
-    icon: Home,
-    path: "Classes",
-    color: "#ffffff",
-  },
-  {
-    name: "អាហារូបករណ៍",
-    icon: Graduation,
-    path: "Scholarships",
-    color: "#ffffff",
-  },
-  {
-    name: "ផ្ទាំងគ្រប់គ្រងជំនាន់",
-    icon: Layer,
-    path: "Generations",
-    color: "#ffffff",
-  },
-  {
-    name: "ផ្ទាំងគ្រប់គ្រងមុខវិជ្ជា",
-    icon: Book,
-    path: "Subjects",
-    color: "#ffffff",
-  },
-];
-
-const reports = [
-  {
-    name: "បញ្ចូលពិន្ទុសិស្ស",
-    icon: Add,
-    path: "Scores",
-    color: "#ffffff",
-  },
-  {
-    name: "ប្រណិប័ត្រពិន្ទុ",
-    icon: file,
-    path: "Reports",
-    color: "#ffffff",
-  },
-];
-</script>
-
 <template>
   <aside class="sidebar">
-    <!-- Logo -->
-    <div class="logo">
-      <h1 class="logo-text">AlumiNet</h1>
+    <div class="brand-section">
+      <div class="logo-box">AN</div>
+      <span class="brand-name">AlumiNet</span>
+    </div>
+    <hr class="divider" />
+
+    <div class="nav-section">
+      <!-- <span class="section-label">DASHBOARD</span> -->
+      <router-link
+        v-for="item in dashboard"
+        :key="item.path"
+        :to="{ name: item.path }"
+        class="menu-item"
+        active-class="active"
+      >
+        <component :is="item.icon" class="menu-icon" :size="20" :stroke-width="1.6" />
+        <span class="menu-label">{{ item.name }}</span>
+      </router-link>
     </div>
 
-    <!-- Dashboard -->
-    <label class="section-title">Dashboard</label>
-    <router-link
-      v-for="(item, index) in dashboard"
-      :key="'mgmt-' + index"
-      :to="{ name: item.path }"
-      class="menu-item"
-    >
-      <div class="icon-wrapper">
-        <component :is="item.icon" :size="item.size || 20" />
+    <div class="nav-section">
+      <span class="section-label">ផ្ទាំងគ្រប់គ្រងទូទៅ</span>
+      <router-link
+        v-for="item in management"
+        :key="item.path"
+        :to="{ name: item.path }"
+        class="menu-item"
+        active-class="active"
+      >
+        <component :is="item.icon" class="menu-icon" :size="20" :stroke-width="1.6" />
+        <span class="menu-label">{{ item.name }}</span>
+      </router-link>
+    </div>
+
+    <div class="nav-section">
+      <span class="section-label">ផ្ទាំងគ្រប់គ្រងពិន្ទុ</span>
+      <router-link
+        v-for="item in reports"
+        :key="item.path"
+        :to="{ name: item.path }"
+        class="menu-item"
+        active-class="active"
+      >
+        <component :is="item.icon" class="menu-icon" :size="20" :stroke-width="1.6" />
+        <span class="menu-label">{{ item.name }}</span>
+      </router-link>
+    </div>
+
+    <div class="spacer" />
+
+    <div class="bottom-section">
+      <div class="logout-btn" @click="isShow = true">
+        <IconLogout :size="20" :stroke-width="1.6" />
+        <span>ចាកចេញ</span>
       </div>
-      <span>{{ item.name }}</span>
-    </router-link>
-
-    <label class="section-title">ផ្ទាំងគ្រប់គ្រងទូទៅ</label>
-
-    <router-link
-      v-for="(item, index) in management"
-      :key="'mgmt-' + index"
-      :to="{ name: item.path }"
-      class="menu-item"
-    >
-      <div class="icon-wrapper">
-        <component :is="item.icon" :size="item.size || 20" />
-      </div>
-      <span>{{ item.name }}</span>
-    </router-link>
-
-    <label class="section-title">ផ្ទាំងគ្រប់គ្រងពិន្ទុ</label>
-
-    <router-link
-      v-for="(item, index) in reports"
-      :key="'report-' + index"
-      :to="{ name: item.path }"
-      class="menu-item"
-    >
-      <div class="icon-wrapper">
-        <component :is="item.icon" :size="20" />
-      </div>
-      <span>{{ item.name }}</span>
-    </router-link>
-
-    <!-- Logout -->
-    <div class="logout">
-      <div class="icon logout-icon"><arrow-left /></div>
-      <span>ចាកចេញ</span>
     </div>
   </aside>
+
+  <Teleport to="body">
+    <Transition name="fade">
+      <div v-if="isShow" class="modal-overlay" @click.self="isShow = false">
+        <div class="modal-box">
+          <div class="modal-body">
+            <div class="modal-icon">
+              <IconLogout :size="20" :stroke-width="1.6" />
+            </div>
+            <div class="modal-title">ចាកចេញពីប្រព័ន្ធ</div>
+            <p class="modal-desc">
+              តើអ្នកពិតជាចង់ចាកចេញពី <span>AlumiNet</span> មែនទេ?
+            </p>
+          </div>
+          <div class="modal-actions">
+            <button class="btn-cancel" :disabled="loading" @click="isShow = false">
+              បោះបង់
+            </button>
+            <button class="btn-confirm" :disabled="loading" @click="handleLogout">
+              {{ loading ? 'ផ្អាក...' : 'ចាកចេញ' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import {
+  IconLayoutDashboard,
+  IconUsersGroup,
+  IconHome,
+  IconRosette,
+  IconLayersLinked,
+  IconBook,
+  IconSquarePlus,
+  IconFileDescription,
+  IconLogout,
+} from '@tabler/icons-vue'
+
+const router = useRouter()
+const isShow = ref(false)
+const loading = ref(false)
+
+const dashboard = [
+  { name: "ផ្ទាំងគ្រប់គ្រង", icon: IconLayoutDashboard, path: "Dashboard" },
+]
+
+const management = [
+  { name: "ផ្ទាំងគ្រប់គ្រងសិស្ស",   icon: IconUsersGroup,     path: "Students" },
+  { name: "ផ្ទាំងគ្រប់គ្រងថ្នាក់",    icon: IconHome,           path: "Classes" },
+  { name: "អាហារូបករណ៍",               icon: IconRosette,        path: "Scholarships" },
+  { name: "ផ្ទាំងគ្រប់គ្រងជំនាន់",    icon: IconLayersLinked,   path: "Generations" },
+  { name: "ផ្ទាំងគ្រប់គ្រងមុខវិជ្ជា", icon: IconBook,           path: "Subjects" },
+]
+
+const reports = [
+  { name: "បញ្ចូលពិន្ទុសិស្ស", icon: IconSquarePlus,      path: "Scores" },
+  { name: "ប្រណិប័ត្រពិន្ទុ",  icon: IconFileDescription, path: "Reports" },
+]
+
+const handleLogout = async () => {
+  loading.value = true
+  try {
+    await router.push({ name: 'Login' })
+  } finally {
+    loading.value = false
+    isShow.value = false
+  }
+}
+</script>
+
+
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+
+.section-label {
+  font-size: 20px !important;
+  color:#1B3F72 !important;
+  font-weight: 500 !important;
+}
 .sidebar {
-  width: 270px;
+  width: 280px;
   height: 100vh;
-  background: var(--color-bg-sidebar-navbar);
-  padding: 24px 18px;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
-  font-family: "Kantumruy Pro", sans-serif;
-  box-shadow: var(--shadow-md);
+  border-right: 1px solid #f1f3f5;
+  font-family: 'Kantumruy Pro', sans-serif;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
 }
 
-/* Logo */
-.logo {
-  text-align: center;
-  margin: 0 20px;
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 28px 24px 24px;
 }
 
-.logo .logo-text {
-  color: var(--primary-color);
-  font-size: var(--text-2xl);
-  font-weight: var(--font-weight-bold);
-  border-bottom: 2px solid
-    color-mix(in srgb, var(--primary-color), transparent 50%);
-  padding-bottom: 14px;
+.logo-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #1B3F72;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
 }
 
-/* Section */
-.section-title {
-  font-size: var(--text-xl);
-  font-weight: var(--font-weight-semibold);
-  color: var(--primary-color);
-  margin: 10px 0;
+.brand-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  letter-spacing: -0.3px;
 }
 
-/* Menu */
+.divider {
+  height: 1px;
+  background-color: #1B3F72;
+  margin: 0 24px 20px;
+  border: none;
+}
+
+.nav-section {
+  padding: 0 16px;
+  margin-bottom: 10px;
+}
+
+.section-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+  color: #adb5bd;
+  padding: 0 10px;
+  margin-bottom: 6px;
+}
+
 .menu-item {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 8px 16px;
-  border-radius: 15px;
-  cursor: pointer;
-  color: color-mix(in srgb, var(--primary-color) 70%, transparent);
-  transition: var(--transition-slow);
-  margin-bottom: 5px;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  padding: 13px 16px;
+  border-radius: 14px;
+  color: #1B3F72;
   text-decoration: none;
+  transition: background 0.18s ease, color 0.18s ease;
+  margin-bottom: 2px;
 }
 
-.menu-item .icon-wrapper {
-  width: 30px;
-  height: 30px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--primary-color);
-}
-
-.menu-item span {
-  font-weight: var(--font-weight-medium);
-  font-size: var(--text-lg);
-}
-
-.menu-item:hover {
-  background: rgba(8, 59, 115, 0.08);
-  color: #083b73;
+.menu-item:hover:not(.active) {
+  background: #f0f4fb;
 }
 
 .menu-item.active {
-  background: var(--primary-color);
-  color: var(--color-gray-light);
-  box-shadow: 0 8px 18px rgba(8, 59, 115, 0.18);
+  background: #1B3F72;
+  color: #ffffff;
 }
 
-.menu-item.active .icon-wrapper {
-  background: var(--color-blue);
+.menu-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: currentColor;
+  opacity: 0.85;
 }
 
-.menu-item .icon-wrapper.active {
-  background: var(--color-blue);
+.menu-item.active .menu-icon {
+  opacity: 1;
 }
 
-/* Icon */
-.icon {
-  width: 30px;
-  height: 30px;
+.menu-label {
+  font-size: 18px;
+  font-weight: 500;
+  flex: 1;
+  line-height: 1.4;
+  color: currentColor;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.bottom-section {
+  padding: 12px 16px 20px;
+  border-top: 1px solid #f1f3f5;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
   border-radius: 12px;
-  background: var(--primary-color);
+  cursor: pointer;
+  color: #e03131;
+  font-size: 15px;
+  font-weight: 400;
+  transition: background 0.15s ease;
+  font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.logout-btn:hover {
+  background: #fff5f5;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
 }
 
-.menu-item.active .icon {
-  background: var(--color-blue);
+.modal-box {
+  background: #ffffff;
+  border-radius: 18px;
+  width: 310px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.14);
 }
 
-/* Logout */
-.logout {
-  margin-top: auto;
+.modal-body {
+  padding: 24px 22px 18px;
+}
+
+.modal-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fff5f5;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  color: #ff4b4b;
-  font-weight: 700;
-  text-decoration: none;
+  justify-content: center;
+  margin-bottom: 14px;
+  color: #e03131;
 }
 
-.logout-icon {
-  background: #ffe6e6;
-  color: #ff4b4b;
+.modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+  font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.modal-desc {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+  font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.modal-desc span {
+  color: #1B3F72;
+  font-weight: 600;
+}
+
+.modal-actions {
+  display: flex;
+  border-top: 1px solid #f1f3f5;
+}
+
+
+.modal-actions button {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Kantumruy Pro', sans-serif;
+  transition: background 0.15s ease;
+}
+
+.btn-cancel {
+  color: #64748b;
+  border-right: 1px solid #f1f3f5;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background: #f8f9fa;
+}
+
+.btn-confirm {
+  color: #e03131;
+  font-weight: 600;
+}
+
+.btn-confirm:hover:not(:disabled) {
+  background: #fff5f5;
+}
+
+.btn-cancel:disabled,
+.btn-confirm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

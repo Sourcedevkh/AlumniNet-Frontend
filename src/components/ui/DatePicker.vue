@@ -1,11 +1,8 @@
 <template>
   <div class="content-wrapper">
     <div class="date-picker-wrapper">
-      <!-- Main Card -->
       <v-card class="date-picker-card">
-        <!-- Month and Year Navigation -->
         <div class="month-year-nav">
-          <!-- Month Selector -->
           <div class="month-selector">
             <v-btn
               icon="mdi-chevron-left"
@@ -23,7 +20,6 @@
                   {{ monthName }} <v-icon right>mdi-menu-down</v-icon>
                 </v-btn>
               </template>
-              <!-- Month Grid Menu -->
               <div class="month-year-menu">
                 <div class="menu-header">
                   <v-btn
@@ -60,7 +56,6 @@
             ></v-btn>
           </div>
 
-          <!-- Year Selector -->
           <div class="year-selector">
             <v-btn
               icon="mdi-chevron-left"
@@ -78,7 +73,7 @@
                   {{ currentYear }} <v-icon right>mdi-menu-down</v-icon>
                 </v-btn>
               </template>
-              <!-- Year Grid Menu -->
+
               <div class="month-year-menu year-menu">
                 <div class="menu-header">
                   <v-btn
@@ -118,16 +113,13 @@
           </div>
         </div>
 
-        <!-- Calendar Grid -->
         <div class="calendar-container">
-          <!-- Day Headers -->
           <div class="day-header">
             <div v-for="day in dayNames" :key="day" class="day-name">
               {{ day }}
             </div>
           </div>
 
-          <!-- Calendar Days -->
           <div class="calendar-days">
             <div
               v-for="(day, index) in calendarDays"
@@ -163,21 +155,21 @@ const showMonthMenu = ref(false);
 const showYearMenu = ref(false);
 
 const monthsList = [
-  "January",
-  "February",
-  "March",
-  "April",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
   "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
-const dayNames = ["S", "M", "T", "W", "T", "F", "S"];
+const dayNames = ["Sun", "M", "T", "W", "T", "F", "S"];
 
 const monthName = computed(() => monthsList[currentMonth.value]);
 
@@ -203,7 +195,6 @@ const calendarDays = computed(() => {
   const endDate = lastDay.getDate();
   const prevEndDate = prevLastDay.getDate();
 
-  // Previous month days
   for (let i = startDate - 1; i >= 0; i--) {
     days.push({
       date: prevEndDate - i,
@@ -218,7 +209,6 @@ const calendarDays = computed(() => {
     });
   }
 
-  // Current month days
   for (let i = 1; i <= endDate; i++) {
     const date = new Date(currentYear.value, currentMonth.value, i);
     const isToday = date.toDateString() === today.toDateString();
@@ -235,7 +225,6 @@ const calendarDays = computed(() => {
     });
   }
 
-  // Next month days
   const remainingDays = 42 - days.length;
   for (let i = 1; i <= remainingDays; i++) {
     days.push({
@@ -326,7 +315,7 @@ const formatDateHeader = (dateString) => {
 <style scoped>
 .content-wrapper {
   background: #ffffff;
-  padding: 24px;
+  padding: 14px;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   width: 100%;
