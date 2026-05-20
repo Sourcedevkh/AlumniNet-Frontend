@@ -1,6 +1,7 @@
 <script setup>
+import { ref } from "vue";
 // icon
-import Branding from '../icons/BrandingAlumiNet.vue'
+import Branding from "../icons/BrandingAlumiNet.vue";
 import Dashboard from "../icons/Dashboard.vue";
 import Add from "../icons/Add.vue";
 import ArrowLeft from "../icons/Arrow-left.vue";
@@ -83,12 +84,8 @@ const reports = [
 
     <!-- Dashboard -->
     <!-- <label class="section-title">Dashboard</label> -->
-    <router-link
-      v-for="(item, index) in dashboard"
-      :key="'mgmt-' + index"
-      :to="{ name: item.path }"
-      class="menu-item mt-3"
-    >
+    <router-link v-for="(item, index) in dashboard" :key="'mgmt-' + index" :to="{ name: item.path }"
+      class="menu-item mt-3">
       <div class="icon-wrapper">
         <component :is="item.icon" :size="item.size || 20" />
       </div>
@@ -147,11 +144,11 @@ const reports = [
 </template>
 
 <style scoped>
-
 .sidebar {
   width: 270px;
   height: 100vh;
-  background: var(--color-bg-sidebar-navbar);
+  /* background: var(--color-bg-sidebar-navbar); */
+  background: var(--color-bg-light);
   padding: 24px 18px;
   display: flex;
   flex-direction: column;
@@ -165,8 +162,7 @@ const reports = [
   align-items: center;
   justify-content: center;
   width: 100%;
-    border-bottom: 2px solid
-    color-mix(in srgb, var(--primary-color), transparent 50%);
+  border-bottom: 2px solid color-mix(in srgb, var(--primary-color), transparent 50%);
   padding-bottom: 16px;
 }
 
@@ -179,17 +175,19 @@ const reports = [
 }
 
 /* Menu */
+
 .menu-item {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   padding: 8px 16px;
-  border-radius: 15px;
-  cursor: pointer;
+  border-radius: 14px;
   color: color-mix(in srgb, var(--primary-color) 70%, transparent);
   transition: var(--transition-slow);
-  margin-bottom: 5px;
   text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 5px;
 }
 
 .menu-item .icon-wrapper {
@@ -199,6 +197,7 @@ const reports = [
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--color-bg-light);
   background: var(--primary-color);
 }
 
@@ -208,22 +207,36 @@ const reports = [
 }
 
 .menu-item:hover {
-  background: rgba(8, 59, 115, 0.08);
-  color: #083b73;
+  background: rgba(8, 59, 115, 0.06);
+  color: var(--primary-color);
+  transform: translateX(3px);
 }
 
+/* Active State */
 .menu-item.active {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    #0d4d96
+  );
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(8, 59, 115, 0.22);
+}
+
+/* Small active indicator */
+.menu-item.active::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  width: 4px;
+  height: 26px;
+  border-radius: 10px;
   background: var(--primary-color);
-  color: var(--color-gray-light);
-  box-shadow: 0 8px 18px rgba(8, 59, 115, 0.18);
 }
 
 .menu-item.active .icon-wrapper {
-  background: var(--color-blue);
-}
-
-.menu-item .icon-wrapper.active {
-  background: var(--color-blue);
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(6px);
 }
 
 /* Icon */
@@ -237,20 +250,18 @@ const reports = [
   justify-content: center;
 }
 
-.menu-item.active .icon {
-  background: var(--color-blue);
-}
-
 /* Logout */
 .logout {
   margin-top: auto;
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 14px 16px;
+  padding: 16px 0 0 16px;
   color: #ff4b4b;
   font-weight: 700;
   text-decoration: none;
+  border-top: 2px solid color-mix(in srgb, var(--primary-color), transparent 50%);
+  cursor: pointer;
 }
 
 .logout-icon {
@@ -258,19 +269,21 @@ const reports = [
   color: #ff4b4b;
 }
 
-
-
 /* Container របស់ Modal */
 .modal-content {
   background-color: #ffffff;
   border-radius: 20px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
   border: 1px solid #f1f5f9;
   padding: 24px;
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
-  font-family: 'Kantumruy Pro', 'Inter', sans-serif; /* ប្រើ Font ខ្មែរបែបសម័យថ្មី */
+  font-family:
+    "Kantumruy Pro", "Inter", sans-serif;
+  /* ប្រើ Font ខ្មែរបែបសម័យថ្មី */
 }
 
 /* Header Section */
@@ -286,7 +299,8 @@ const reports = [
 .modal-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #1e293b; /* ពណ៌ប្រផេះចាស់បែប Premium */
+  color: #1e293b;
+  /* ពណ៌ប្រផេះចាស់បែប Premium */
   margin: 0;
 }
 
@@ -308,7 +322,8 @@ const reports = [
 }
 
 .btn-close::before {
-  content: "✕"; /* ករណីមិនទាន់មាន icon ស្រាប់ */
+  content: "✕";
+  /* ករណីមិនទាន់មាន icon ស្រាប់ */
 }
 
 /* ផ្នែកអត្ថបទពិពណ៌នា (Body) */
@@ -324,7 +339,8 @@ const reports = [
 /* លេងពណ៌លើឈ្មោះប្រព័ន្ធ AlumiNet ឱ្យលេចធ្លោ */
 .description span {
   font-weight: 700;
-  color: #3b82f6; /* ពណ៌ខៀវបែបបច្ចេកវិទ្យា */
+  color: #3b82f6;
+  /* ពណ៌ខៀវបែបបច្ចេកវិទ្យា */
   background-color: #eff6ff;
   padding: 2px 8px;
   border-radius: 6px;
@@ -365,9 +381,9 @@ const reports = [
   color: #1e293b;
 }
 
-/* ប៊ូតុងចាកចេញ (Confirm Logout) */
+/* (Confirm Logout) */
 .confirm-btn {
-  background-color: #ef4444; /* ពណ៌ក្រហមតំណាងអោយការ Logout/Delete */
+  background-color: #ef4444;
   color: #ffffff;
   box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2);
 }
@@ -375,7 +391,8 @@ const reports = [
 .confirm-btn:hover {
   background-color: #dc2626;
   box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3);
-  transform: translateY(-1px); /* រំកិលឡើងលើបន្តិចពេល Hover */
+  transform: translateY(-1px);
+  /* រំកិលឡើងលើបន្តិចពេល Hover */
 }
 
 .confirm-btn:active {
@@ -389,5 +406,4 @@ const reports = [
   transform: none;
   box-shadow: none;
 }
-
 </style>

@@ -1,4 +1,3 @@
-
 <template>
   <div class="login-wrapper">
     <div class="bg-shape shape-top-left-1"></div>
@@ -51,7 +50,7 @@
   transform: rotate(-35deg) translate(70px, -185px);
 }
 
-.shape-top-left-2 {   
+.shape-top-left-2 {
   width: 400px;
   height: 450px;
   top: -120px;
@@ -60,7 +59,7 @@
 }
 
 /* --- Bottom Right Shape Group --- */
-.shape-bottom-right-1 {   
+.shape-bottom-right-1 {
   width: 550px;
   height: 500px;
   right: -120px;
@@ -79,10 +78,13 @@
 }
 
 .login-content {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
   position: relative;
   z-index: 10;
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

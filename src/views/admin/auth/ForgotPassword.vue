@@ -12,9 +12,6 @@ import BaseButton from "@/components/ui/BaseButton.vue";
         <template #default>
             <div class="form-container">
                 <div class="left-content">
-                    <h3 class="title">ផ្លូវរបស់អ្នកឆ្ពោះទៅរកការតភ្ជាប់អតីតនិស្សិត និងភាពជោគជ័យរបស់និស្សិត</h3>
-                    <p class="sub-title">សូមស្វាគមន៍មកកាន់ AlumiNet ដែលភ្ជាប់អតីតនិស្សិត និងនិស្សិតតាមរយៈកិច្ចសហការ
-                        និងការរីកចម្រើន</p>
                     <img src="../../../assets/images/auth/login-image.png" alt="Login Image" class="login-image">
                 </div>
                 <div class="right-content">
@@ -52,12 +49,14 @@ import BaseButton from "@/components/ui/BaseButton.vue";
 
 .form-container {
     display: flex;
-    min-height: 100vh;
     width: 100%;
+    max-width: 900px;
     align-items: center;
     justify-content: center;
     gap: 10%;
     padding: 20px;
+    border-radius: 16px;
+    background-color: var(--color-bg-light);
 }
 
 .form-container .left-content {
@@ -65,21 +64,6 @@ import BaseButton from "@/components/ui/BaseButton.vue";
     color: var(--color-bg-light);
     max-width: 40%;
     text-align: center;
-}
-
-.form-container .left-content .title {
-    font-family: var(--font-khmer);
-    font-size: var(--text-2xl);
-    line-height: 1.8;
-    font-weight: var(--font-weight-semibold);
-    margin-bottom: 20px;
-}
-
-.form-container .left-content .sub-title {
-    font-family: var(--font-khmer);
-    color: #d2d2d2;
-    font-size: var(--text-lg);
-    margin-bottom: 30px;
 }
 
 .form-container .left-content .login-image {
