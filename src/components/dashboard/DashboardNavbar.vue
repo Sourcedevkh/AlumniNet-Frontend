@@ -1,13 +1,14 @@
 <script setup>
-    import { Search } from 'lucide-vue-next';
+import { Search } from 'lucide-vue-next'
 </script>
 
 <template>
   <header class="topbar">
     <div class="search-box">
-      <Search class="search-icon" size="18" />
-      <input type="text" placeholder="Search"/>
+      <Search class="search-icon" :size="18" />
+      <input type="text" placeholder="Search" />
     </div>
+    
     <div class="user-info">
       <div class="user-text">
         <span class="user-name">PumpuyPikheat</span>
@@ -19,28 +20,38 @@
 </template>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
+
 .topbar {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 28px;
-  background: var(--color-bg-sidebar-navbar);
-  box-shadow: var(--shadow-md);
+  padding: 16px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #eef1f6;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 .search-box {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   width: 100%;
-  max-width: 360px;
-  min-width: 220px;
+  max-width: 320px;
+  min-width: 200px;
+  background: #f4f7fb;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.search-box:focus-within {
   background: #ffffff;
-  border: 1px solid var(--color-gray-pale);
-  border-radius: 10px;
-  padding: 8px 14px;
-  box-sizing: border-box;
+  border-color: #1B3F72;
 }
 
 .search-box input {
@@ -49,14 +60,17 @@
   border: none;
   outline: none;
   background: transparent;
-  font-size: 13px;
-  color: #334155;
-  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  color: #1a1a2e;
+}
+
+.search-box input::placeholder {
+  color: #8c9ba5;
 }
 
 .search-icon {
-  font-size: 13px;
-  color: #94a3b8;
+  color: #8c9ba5;
+  flex-shrink: 0;
 }
 
 .user-info {
@@ -67,33 +81,34 @@
 
 .user-text {
   text-align: right;
-  border-left: 3px solid var(--color-gray-pale);
-  padding-left: 12px;
 }
 
 .user-name {
   display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #1e293b;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1a1a2e;
+  line-height: 1.2;
 }
 
 .user-role {
   display: block;
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: 0.75rem;
+  color: #8c9ba5;
+  margin-top: 2px;
 }
 
 .avatar {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  background: #dde8f8;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
+  color: #1B3F72;
+  font-size: 0.85rem;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 </style>
