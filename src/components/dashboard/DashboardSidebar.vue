@@ -1,16 +1,18 @@
 <script setup>
-// icon
-import Branding from '../icons/BrandingAlumiNet.vue'
-import Dashboard from "../icons/Dashboard.vue";
+import { ref } from 'vue';
 import Add from "../icons/Add.vue";
 import ArrowLeft from "../icons/Arrow-left.vue";
 import Book from "../icons/Book.vue";
+import Branding from '../icons/BrandingAlumiNet.vue';
+import Dashboard from "../icons/Dashboard.vue";
 import file from "../icons/file.vue";
 import Graduation from "../icons/Graduation.vue";
 import Home from "../icons/Home.vue";
-import User from "../icons/User.vue";
 import Layer from "../icons/Layer.vue";
+import User from "../icons/User.vue";
 import BaseModel from "../ui/BaseModal.vue";
+import { BadgeX, } from 'lucide-vue-next';
+import { X } from 'lucide-vue-next'
 
 const isShow = ref(false);
 const loading = ref(false);
@@ -75,20 +77,12 @@ const reports = [
 
 <template>
   <aside class="sidebar">
-    <!-- Logo -->
     <div class="brand-container">
-      <!-- <h1 class="logo-text">AlumiNet</h1> -->
       <Branding :size="30" />
     </div>
 
-    <!-- Dashboard -->
-    <!-- <label class="section-title">Dashboard</label> -->
-    <router-link
-      v-for="(item, index) in dashboard"
-      :key="'mgmt-' + index"
-      :to="{ name: item.path }"
-      class="menu-item mt-3"
-    >
+    <router-link v-for="(item, index) in dashboard" :key="'mgmt-' + index" :to="{ name: item.path }"
+      class="menu-item mt-3">
       <div class="icon-wrapper">
         <component :is="item.icon" :size="item.size || 20" />
       </div>
@@ -122,21 +116,24 @@ const reports = [
 
   <BaseModel :show="isShow" @close="isShow = false">
     <template #modal>
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirm Logout</h5>
-          <button class="btn-close" @click="isShow = false"></button>
+      <div class="modal-content custom-logout-modal">
+        <div class="close-btn-top" @click="isShow = false" aria-label="Close">
+          <X :size="18" :stroke-width="2.5" />
         </div>
-        <p class="description">
-          សូមបញ្ជាក់ម្ដងទៀត ប្រសិនបើអ្នកចង់ចាកចេញពីប្រព័ន្ធ
-          <span>AlumiNet</span>
-        </p>
-
-        <div class="modal-footer">
+        <div class="icon-box">
+          <BadgeX :size="40" color="white" stroke-width="2.5" />
+        </div>
+        <div class="content-text text-center">
+          <h2 class="modal-title-custom">តើអ្នកចង់ចាកចេញមែនទេ?</h2>
+          <p class="description">
+            សូមបញ្ជាក់ម្ដងទៀត ប្រសិនបើអ្នកចង់ចាកចេញពីប្រព័ន្ធ
+            <span>AlumiNet</span>
+          </p>
+        </div>
+        <div class="modal-footer-custom">
           <BaseButton class="btn cancel-btn" @click="isShow = false">
             បោះបង់
           </BaseButton>
-
           <BaseButton class="btn confirm-btn" :loading="loading" @click="onClickLogout">
             {{ loading ? "Loading..." : "ចាកចេញ" }}
           </BaseButton>
@@ -147,6 +144,105 @@ const reports = [
 </template>
 
 <style scoped>
+.custom-logout-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px 10px;
+  background: #ffffff;
+  font-family: var(--font-khmer);
+}
+
+/* រៀបចំប្រអប់ Icon ក្រហម */
+.custom-logout-modal .icon-box {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #fb7185, #e11d48);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 30px rgba(225, 29, 72, 0.25);
+}
+
+.custom-logout-modal .modal-title-custom {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.custom-logout-modal .description {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #64748b;
+  margin-bottom: 32px;
+}
+
+.custom-logout-modal .description span {
+  color: #e11d48;
+  font-weight: 700;
+}
+
+.custom-logout-modal .modal-footer-custom {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  width: 100%;
+}
+
+.custom-logout-modal .close-btn-top {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+
+.custom-logout-modal .close-btn-top:hover {
+  background: #f1f5f9;
+  color: #e11d48;
+  transform: scale(1.08) rotate(90deg);
+  box-shadow: 0 6px 16px rgba(225, 29, 72, 0.15);
+}
+
+.custom-logout-modal .close-btn-top:active {
+  transform: scale(0.95) rotate(90deg);
+}
+
+.custom-logout-modal :deep(.confirm-btn) {
+  border: none !important;
+  background: linear-gradient(135deg, #f43f5e, #e11d48) !important;
+  color: white !important;
+  box-shadow: 0 10px 24px rgba(225, 29, 72, 0.25);
+}
+
+.custom-logout-modal :deep(.confirm-btn:hover) {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 576px) {
+  .custom-logout-modal .modal-title-custom {
+    font-size: 24px;
+  }
+
+  .custom-logout-modal .modal-footer-custom {
+    flex-direction: column;
+  }
+}
 
 .sidebar {
   width: 270px;
@@ -155,22 +251,19 @@ const reports = [
   padding: 24px 18px;
   display: flex;
   flex-direction: column;
-  font-family: "Kantumruy Pro", sans-serif;
+  font-family: var(--font-khmer);
   box-shadow: var(--shadow-md);
 }
 
-/* Logo */
 .brand-container {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-    border-bottom: 2px solid
-    color-mix(in srgb, var(--primary-color), transparent 50%);
+  border-bottom: 2px solid color-mix(in srgb, var(--primary-color), transparent 50%);
   padding-bottom: 16px;
 }
 
-/* Section */
 .section-title {
   font-size: var(--text-xl);
   font-weight: var(--font-weight-semibold);
@@ -178,7 +271,6 @@ const reports = [
   margin: 10px 0;
 }
 
-/* Menu */
 .menu-item {
   display: flex;
   align-items: center;
@@ -226,7 +318,7 @@ const reports = [
   background: var(--color-blue);
 }
 
-/* Icon */
+
 .icon {
   width: 30px;
   height: 30px;
@@ -241,7 +333,6 @@ const reports = [
   background: var(--color-blue);
 }
 
-/* Logout */
 .logout {
   margin-top: auto;
   display: flex;
@@ -259,8 +350,6 @@ const reports = [
 }
 
 
-
-/* Container របស់ Modal */
 .modal-content {
   background-color: #ffffff;
   border-radius: 20px;
@@ -270,10 +359,8 @@ const reports = [
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
-  font-family: 'Kantumruy Pro', 'Inter', sans-serif; /* ប្រើ Font ខ្មែរបែបសម័យថ្មី */
 }
 
-/* Header Section */
 .modal-header {
   display: flex;
   align-items: center;
@@ -286,11 +373,10 @@ const reports = [
 .modal-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #1e293b; /* ពណ៌ប្រផេះចាស់បែប Premium */
+  color: #1e293b;
   margin: 0;
 }
 
-/* ប៊ូតុងខ្វែង (x) សម្រាប់បិទ */
 .btn-close {
   background: none;
   border: none;
@@ -308,10 +394,10 @@ const reports = [
 }
 
 .btn-close::before {
-  content: "✕"; /* ករណីមិនទាន់មាន icon ស្រាប់ */
+  content: "✕";
 }
 
-/* ផ្នែកអត្ថបទពិពណ៌នា (Body) */
+
 .description {
   font-size: 17px;
   color: #64748b;
@@ -321,10 +407,9 @@ const reports = [
   padding: 10px 0;
 }
 
-/* លេងពណ៌លើឈ្មោះប្រព័ន្ធ AlumiNet ឱ្យលេចធ្លោ */
 .description span {
   font-weight: 700;
-  color: #3b82f6; /* ពណ៌ខៀវបែបបច្ចេកវិទ្យា */
+  color: #3b82f6;
   background-color: #eff6ff;
   padding: 2px 8px;
   border-radius: 6px;
@@ -332,14 +417,12 @@ const reports = [
   display: inline-block;
 }
 
-/* Footer Section */
 .modal-footer {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
 }
 
-/* ស្ទីលរួមរបស់ប៊ូតុង */
 .btn {
   padding: 10px 20px;
   font-size: 0.95rem;
@@ -354,7 +437,6 @@ const reports = [
   min-width: 100px;
 }
 
-/* ប៊ូតុងបោះបង់ (Cancel) */
 .cancel-btn {
   background-color: #f1f5f9;
   color: #475569;
@@ -365,9 +447,8 @@ const reports = [
   color: #1e293b;
 }
 
-/* ប៊ូតុងចាកចេញ (Confirm Logout) */
 .confirm-btn {
-  background-color: #ef4444; /* ពណ៌ក្រហមតំណាងអោយការ Logout/Delete */
+  background-color: #ef4444;
   color: #ffffff;
   box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2);
 }
@@ -375,19 +456,17 @@ const reports = [
 .confirm-btn:hover {
   background-color: #dc2626;
   box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3);
-  transform: translateY(-1px); /* រំកិលឡើងលើបន្តិចពេល Hover */
+  transform: translateY(-1px);
 }
 
 .confirm-btn:active {
   transform: translateY(0);
 }
 
-/* ស្ទីលពេលប៊ូតុងកំពុង Loading */
 .confirm-btn:disabled {
   opacity: 0.65;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
-
 </style>
