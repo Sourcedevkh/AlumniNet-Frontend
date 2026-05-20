@@ -18,7 +18,7 @@ defineProps({
 <style scoped>
 .form-check {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   cursor: pointer;
   user-select: none;
@@ -42,9 +42,11 @@ defineProps({
 }
 
 .form-check-label {
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.5;
   color: #8c8c8c;
   cursor: pointer;
+  margin-top: 5px;
+  font-family: var(--font-khmer);
 }
 </style>

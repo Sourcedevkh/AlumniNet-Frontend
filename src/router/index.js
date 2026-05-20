@@ -10,6 +10,12 @@ const router = createRouter({
       meta: { guestOnly: true, title: "Login" },
     },
     {
+      path: "/forgotpassword",
+      name: "ForgotPassword",
+      component: () => import("../views/admin/auth/ForgotPassword.vue"),
+      meta: { guestOnly: true, title: "Forgot Password" },
+    },
+    {
       path: "/",
       component: () => import("../layouts/DashboardLayout.vue"),
       meta: { requiresAuth: true }, // 👈 Protected at the layout level
