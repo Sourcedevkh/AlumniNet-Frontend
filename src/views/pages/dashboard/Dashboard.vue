@@ -3,13 +3,10 @@ import { ref, onMounted ,computed } from "vue";
 import StatCard from "@/components/ui/StatCard.vue";
 import DoughnutChart from "@/components/chartjs/DoughnutChart.vue";
 import DatePicker from "@/components/ui/DatePicker.vue";
-// icon
 import GraduationPage from "@/components/icons/GraduationPage.vue";
 import Box from "@/components/icons/Box.vue";
 import Rating from "@/components/icons/Rating.vue";
 import Time from "@/components/icons/Time.vue";
-import BaseButton from "@/components/ui/BaseButton.vue";
-import { SquarePlus } from "lucide-vue-next";
 import BaseTable from "@/components/ui/BaseTable.vue";
 
 const stats = ref([
