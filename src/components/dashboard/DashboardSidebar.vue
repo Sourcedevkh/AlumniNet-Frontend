@@ -8,13 +8,8 @@
 
     <div class="nav-section">
       <!-- <span class="section-label">DASHBOARD</span> -->
-      <router-link
-        v-for="item in dashboard"
-        :key="item.path"
-        :to="{ name: item.path }"
-        class="menu-item"
-        active-class="active"
-      >
+      <router-link v-for="item in dashboard" :key="item.path" :to="{ name: item.path }" class="menu-item"
+        active-class="active">
         <component :is="item.icon" class="menu-icon" :size="20" :stroke-width="1.6" />
         <span class="menu-label">{{ item.name }}</span>
       </router-link>
@@ -22,13 +17,8 @@
 
     <div class="nav-section">
       <span class="section-label">ផ្ទាំងគ្រប់គ្រងទូទៅ</span>
-      <router-link
-        v-for="item in management"
-        :key="item.path"
-        :to="{ name: item.path }"
-        class="menu-item"
-        active-class="active"
-      >
+      <router-link v-for="item in management" :key="item.path" :to="{ name: item.path }" class="menu-item"
+        active-class="active">
         <component :is="item.icon" class="menu-icon" :size="20" :stroke-width="1.6" />
         <span class="menu-label">{{ item.name }}</span>
       </router-link>
@@ -36,13 +26,8 @@
 
     <div class="nav-section">
       <span class="section-label">ផ្ទាំងគ្រប់គ្រងពិន្ទុ</span>
-      <router-link
-        v-for="item in reports"
-        :key="item.path"
-        :to="{ name: item.path }"
-        class="menu-item"
-        active-class="active"
-      >
+      <router-link v-for="item in reports" :key="item.path" :to="{ name: item.path }" class="menu-item"
+        active-class="active">
         <component :is="item.icon" class="menu-icon" :size="20" :stroke-width="1.6" />
         <span class="menu-label">{{ item.name }}</span>
       </router-link>
@@ -58,94 +43,105 @@
     </div>
   </aside>
 
-  <Teleport to="body">
-    <Transition name="fade">
-      <div v-if="isShow" class="modal-overlay" @click.self="isShow = false">
-        <div class="modal-box">
-          <div class="modal-body">
-            <div class="modal-icon">
-              <IconLogout :size="20" :stroke-width="1.6" />
-            </div>
-            <div class="modal-title">ចាកចេញពីប្រព័ន្ធ</div>
-            <p class="modal-desc">
-              តើអ្នកពិតជាចង់ចាកចេញពី <span>AlumiNet</span> មែនទេ?
-            </p>
-          </div>
-          <div class="modal-actions">
-            <button class="btn-cancel" :disabled="loading" @click="isShow = false">
-              បោះបង់
-            </button>
-            <button class="btn-confirm" :disabled="loading" @click="handleLogout">
-              {{ loading ? 'ផ្អាក...' : 'ចាកចេញ' }}
-            </button>
-          </div>
+  <BaseModal :show="isShow" @close="isShow = false">
+    <template #modal>
+      <div class="modal-content custom-logout-modal">
+        <div class="close-btn-top" @click="isShow = false" aria-label="Close">
+          <X :size="18" :stroke-width="2.5" />
+        </div>
+        <div class="icon-box">
+          <BadgeX :size="40" color="white" stroke-width="2.5" />
+        </div>
+        <div class="content-text text-center">
+          <h2 class="modal-title-custom">តើអ្នកចង់ចាកចេញមែនទេ?</h2>
+          <p class="description">
+            សូមបញ្ជាក់ម្ដងទៀត ប្រសិនបើអ្នកចង់ចាកចេញពីប្រព័ន្ធ
+            <span>AlumiNet</span>
+          </p>
+        </div>
+        <div class="modal-footer-custom">
+          <BaseButton class="btn cancel-btn" @click="isShow = false">
+            បោះបង់
+          </BaseButton>
+          <BaseButton class="btn confirm-btn" :loading="loading" @click="onClickLogout">
+            {{ loading ? "Loading..." : "ចាកចេញ" }}
+          </BaseButton>
         </div>
       </div>
-    </Transition>
-  </Teleport>
+    </template>
+  </BaseModal>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import {
-  IconLayoutDashboard,
-  IconUsersGroup,
-  IconHome,
-  IconRosette,
-  IconLayersLinked,
   IconBook,
-  IconSquarePlus,
   IconFileDescription,
+  IconHome,
+  IconLayersLinked,
+  IconLayoutDashboard,
   IconLogout,
-} from '@tabler/icons-vue'
+  IconRosette,
+  IconSquarePlus,
+  IconUsersGroup,
+} from "@tabler/icons-vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-const router = useRouter()
-const isShow = ref(false)
-const loading = ref(false)
+import { BadgeX} from 'lucide-vue-next';
+import { X } from 'lucide-vue-next';
+import BaseButton from "../ui/BaseButton.vue";
+import BaseModal from "../ui/BaseModal.vue";
+
+const router = useRouter();
+const isShow = ref(false);
+const loading = ref(false);
 
 const dashboard = [
   { name: "ផ្ទាំងគ្រប់គ្រង", icon: IconLayoutDashboard, path: "Dashboard" },
-]
+];
 
 const management = [
-  { name: "ផ្ទាំងគ្រប់គ្រងសិស្ស",   icon: IconUsersGroup,     path: "Students" },
-  { name: "ផ្ទាំងគ្រប់គ្រងថ្នាក់",    icon: IconHome,           path: "Classes" },
-  { name: "អាហារូបករណ៍",               icon: IconRosette,        path: "Scholarships" },
-  { name: "ផ្ទាំងគ្រប់គ្រងជំនាន់",    icon: IconLayersLinked,   path: "Generations" },
-  { name: "ផ្ទាំងគ្រប់គ្រងមុខវិជ្ជា", icon: IconBook,           path: "Subjects" },
-]
+  { name: "ផ្ទាំងគ្រប់គ្រងសិស្ស", icon: IconUsersGroup, path: "Students" },
+  { name: "ផ្ទាំងគ្រប់គ្រងថ្នាក់", icon: IconHome, path: "Classes" },
+  { name: "អាហារូបករណ៍", icon: IconRosette, path: "Scholarships" },
+  {
+    name: "ផ្ទាំងគ្រប់គ្រងជំនាន់",
+    icon: IconLayersLinked,
+    path: "Generations",
+  },
+  { name: "ផ្ទាំងគ្រប់គ្រងមុខវិជ្ជា", icon: IconBook, path: "Subjects" },
+];
 
 const reports = [
-  { name: "បញ្ចូលពិន្ទុសិស្ស", icon: IconSquarePlus,      path: "Scores" },
-  { name: "ប្រណិប័ត្រពិន្ទុ",  icon: IconFileDescription, path: "Reports" },
-]
+  { name: "បញ្ចូលពិន្ទុសិស្ស", icon: IconSquarePlus, path: "Scores" },
+  { name: "ប្រណិប័ត្រពិន្ទុ", icon: IconFileDescription, path: "Reports" },
+];
 
-const handleLogout = async () => {
-  loading.value = true
+const onClickLogout = async () => {
+  loading.value = true;
   try {
-    await router.push({ name: 'Login' })
+    await router.push({ name: "Login" });
   } finally {
-    loading.value = false
-    isShow.value = false
+    loading.value = false;
+    isShow.value = false;
   }
-}
+};
 </script>
 
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600&display=swap");
 
 * {
   box-sizing: border-box;
 }
 
-
 .section-label {
   font-size: 20px !important;
-  color:#1B3F72 !important;
+  color: #1b3f72 !important;
   font-weight: 500 !important;
 }
+
 .sidebar {
   width: 280px;
   height: 100vh;
@@ -153,7 +149,7 @@ const handleLogout = async () => {
   display: flex;
   flex-direction: column;
   border-right: 1px solid #f1f3f5;
-  font-family: 'Kantumruy Pro', sans-serif;
+  font-family: "Kantumruy Pro", sans-serif;
   padding: 0;
   position: sticky;
   top: 0;
@@ -172,7 +168,7 @@ const handleLogout = async () => {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: #1B3F72;
+  background: #1b3f72;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -192,7 +188,7 @@ const handleLogout = async () => {
 
 .divider {
   height: 1px;
-  background-color: #1B3F72;
+  background-color: #1b3f72;
   margin: 0 24px 20px;
   border: none;
 }
@@ -220,7 +216,7 @@ const handleLogout = async () => {
   font-weight: 500 !important;
   padding: 13px 16px;
   border-radius: 14px;
-  color: #1B3F72;
+  color: #1b3f72;
   text-decoration: none;
   transition: background 0.18s ease, color 0.18s ease;
   margin-bottom: 2px;
@@ -231,7 +227,7 @@ const handleLogout = async () => {
 }
 
 .menu-item.active {
-  background: #1B3F72;
+  background: #1b3f72;
   color: #ffffff;
 }
 
@@ -275,117 +271,110 @@ const handleLogout = async () => {
   font-size: 15px;
   font-weight: 400;
   transition: background 0.15s ease;
-  font-family: 'Kantumruy Pro', sans-serif;
+  font-family: "Kantumruy Pro", sans-serif;
 }
 
 .logout-btn:hover {
   background: #fff5f5;
 }
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+.custom-logout-modal {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.modal-box {
+  padding: 30px 20px;
   background: #ffffff;
-  border-radius: 18px;
-  width: 310px;
-  overflow: hidden;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.14);
+  font-family: var(--font-khmer);
 }
 
-.modal-body {
-  padding: 24px 22px 18px;
-}
 
-.modal-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: #fff5f5;
+.custom-logout-modal .icon-box {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #fb7185, #e11d48);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 14px;
-  color: #e03131;
+  box-shadow: 0 14px 30px rgba(225, 29, 72, 0.25);
 }
 
-.modal-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1a1a2e;
-  margin-bottom: 8px;
-  font-family: 'Kantumruy Pro', sans-serif;
+.custom-logout-modal .modal-title-custom {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.5;
+  margin-bottom: 12px;
 }
 
-.modal-desc {
-  font-size: 13px;
+.custom-logout-modal .description {
+  font-size: 15px;
+  line-height: 1.8;
   color: #64748b;
-  line-height: 1.6;
-  margin: 0;
-  font-family: 'Kantumruy Pro', sans-serif;
+  margin-bottom: 32px;
 }
 
-.modal-desc span {
-  color: #1B3F72;
-  font-weight: 600;
+.custom-logout-modal .description span {
+  color: #e11d48;
+  font-weight: 700;
 }
 
-.modal-actions {
+.custom-logout-modal .modal-footer-custom {
   display: flex;
-  border-top: 1px solid #f1f3f5;
+  justify-content: flex-end;
+  gap: 12px;
+  width: 100%;
 }
 
-
-.modal-actions button {
-  flex: 1;
-  padding: 14px;
+.custom-logout-modal .close-btn-top {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 40px;
+  height: 40px;
   border: none;
-  background: none;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: 'Kantumruy Pro', sans-serif;
-  transition: background 0.15s ease;
-}
-
-.btn-cancel {
+  border-radius: 50%;
+  background: #ffffff;
   color: #64748b;
-  border-right: 1px solid #f1f3f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
 }
 
-.btn-cancel:hover:not(:disabled) {
-  background: #f8f9fa;
+.custom-logout-modal .close-btn-top:hover {
+  background: #f1f5f9;
+  color: #e11d48;
+  transform: scale(1.08) rotate(90deg);
+  box-shadow: 0 6px 16px rgba(225, 29, 72, 0.15);
 }
 
-.btn-confirm {
-  color: #e03131;
-  font-weight: 600;
+.custom-logout-modal .close-btn-top:active {
+  transform: scale(0.95) rotate(90deg);
 }
 
-.btn-confirm:hover:not(:disabled) {
-  background: #fff5f5;
+.custom-logout-modal :deep(.confirm-btn) {
+  border: none !important;
+  background: linear-gradient(135deg, #f43f5e, #e11d48) !important;
+  color: white !important;
+  box-shadow: 0 10px 24px rgba(225, 29, 72, 0.25);
 }
 
-.btn-cancel:disabled,
-.btn-confirm:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.custom-logout-modal :deep(.confirm-btn:hover) {
+  transform: translateY(-2px);
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
+@media (max-width: 576px) {
+  .custom-logout-modal .modal-title-custom {
+    font-size: 24px;
+  }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+  .custom-logout-modal .modal-footer-custom {
+    flex-direction: column;
+  }
 }
 </style>

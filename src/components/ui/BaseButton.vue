@@ -60,19 +60,71 @@ const onClick = (e) => {
 <style scoped>
 .global-style {
   font-family: var(--font-khmer);
-  gap: 10px;
-  font-size: var(--text-2xl);
-  font-weight: var(--font-weight-medium);
-  border-radius: var(--radius-md);
-  background: var(--primary-color);
-  color: var(--color-bg-light);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 13px 20px;
+  border-radius: 7px;
+  gap: 6px;
+  line-height: 1.3;
+  transition: transform 0.1s ease, opacity 0.12s ease, background 0.13s ease;
 }
-.global-style:active {
-  background: var(--color-blue-navy);
-  color: var(--color-bg-light);
+
+.global-style:active:not(:disabled) {
+  transform: scale(0.95);
 }
-.btn-login:disabled {
-  opacity: 0.6 !important;
-  background: var(--primary-color) !important;
+
+.global-style:disabled {
+  opacity: 0.42 !important;
+  cursor: not-allowed;
+}
+
+.btn-primary  { background: #1a6fdb; color: #fff; }
+.btn-primary:hover:not(:disabled)  { background: #155fc0; }
+
+.btn-success  { background: #1D9E75; color: #fff; }
+.btn-success:hover:not(:disabled)  { background: #168a65; }
+
+.btn-danger   { background: #E24B4A; color: #fff; }
+.btn-danger:hover:not(:disabled)   { background: #cc3a39; }
+.btn-soft-primary { background: #E6F1FB; color: #185FA5; }
+.btn-soft-primary:hover:not(:disabled) { background: #B5D4F4; }
+
+.btn-soft-success { background: #E1F5EE; color: #0F6E56; }
+.btn-soft-success:hover:not(:disabled) { background: #9FE1CB; }
+
+.btn-soft-danger  { background: #FCEBEB; color: #A32D2D; }
+.btn-soft-danger:hover:not(:disabled)  { background: #F7C1C1; }
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--color-border-secondary);
+  color: var(--color-text-secondary);
+  font-family: var(--font-khmer);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 7px;
+  transition: background 0.13s, border-color 0.13s, color 0.13s, transform 0.1s;
+}
+.btn-outline:hover:not(:disabled) {
+  background: var(--color-background-secondary);
+  border-color: var(--color-border-primary);
+  color: var(--color-text-primary);
+}
+.btn-outline:active:not(:disabled) {
+  transform: scale(0.95);
+}
+.btn-outline:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+.btn-cancel {
+  background: var(--color-background-primary);
+  color: var(--color-text-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+}
+.btn-cancel:hover:not(:disabled) {
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
 }
 </style>
