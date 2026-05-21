@@ -7,7 +7,7 @@
       </div>
       <div class="stat-icon-container" :style="{ backgroundColor: iconBg }">
         <slot name="icon">
-          <span :style="{ color: iconColor }">📊</span>
+          <span :style="{ color: iconColor }"></span>
         </slot>
       </div>
     </div>

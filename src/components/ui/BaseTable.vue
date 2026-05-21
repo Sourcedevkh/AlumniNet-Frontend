@@ -142,7 +142,7 @@ const displayedPages = computed(() => {
     pages.push("...");
   }
 
-  pages.push(total);
+    pages.push(total);
 
   return pages;
 });

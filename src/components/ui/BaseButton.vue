@@ -1,3 +1,31 @@
+<template>
+  <button
+    :type="type"
+    :disabled="disabled || loading"
+    @click="onClick"
+    :class="[
+      'btn d-flex align-items-center justify-content-center px-4 global-style',
+      btnClass,
+      { disabled: disabled || loading },
+    ]"
+  >
+    <!-- Loading -->
+    <template v-if="loading">
+      <span
+        class="spinner-border spinner-border-sm me-2"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      {{ loadingText }}
+    </template>
+
+    <!-- Normal -->
+    <template v-else>
+      <slot>Button</slot>
+    </template>
+  </button>
+</template>
+
 <script setup>
 defineProps({
   type: {
@@ -29,34 +57,6 @@ const onClick = (e) => {
 };
 </script>
 
-<template>
-  <button
-    :type="type"
-    :disabled="disabled || loading"
-    @click="onClick"
-    :class="[
-      'btn d-flex align-items-center justify-content-center px-4 global-style',
-      btnClass,
-      { disabled: disabled || loading },
-    ]"
-  >
-    <!-- Loading -->
-    <template v-if="loading">
-      <span
-        class="spinner-border spinner-border-sm me-2"
-        role="status"
-        aria-hidden="true"
-      ></span>
-      {{ loadingText }}
-    </template>
-
-    <!-- Normal -->
-    <template v-else>
-      <slot name="btn">Button</slot>
-    </template>
-  </button>
-</template>
-
 <style scoped>
 .global-style {
   font-family: var(--font-khmer);
@@ -66,13 +66,26 @@ const onClick = (e) => {
   border-radius: var(--radius-md);
   background: var(--primary-color);
   color: var(--color-bg-light);
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
-.global-style:active {
+
+
+.global-style:hover:not(:disabled) {
   background: var(--color-blue-navy);
   color: var(--color-bg-light);
 }
-.btn-login:disabled {
-  opacity: 0.6 !important;
-  background: var(--primary-color) !important;
+
+
+.global-style:active:not(:disabled) {
+  background: var(--color-blue-navy);
+  color: var(--color-bg-light);
+}
+
+.global-style:disabled,
+.global-style.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--primary-color);
+  pointer-events: none;
 }
 </style>
